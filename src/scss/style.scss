@@ -82,10 +82,9 @@ html[data-theme="dark"] {
 	}
 	&__back {
 		display: none;
-		margin-top: 150px;
 		max-width: 140px;
 		width: 100%;
-		margin: 0 auto;
+		margin: 150px auto 0 auto;
 		align-items: center;
 		gap: 10px;
 		cursor: pointer;
