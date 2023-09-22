@@ -7,8 +7,8 @@ const Navbar = ({ adminInfo }) => {
 		<div className="navbar">
 			<Panel />
 			<nav className="navbar__nav">
-				{adminInfo.map((res) => (
-					<Link to={res.to} className="navbar__item">
+				{adminInfo.map((res, index) => (
+					<Link key={index} to={res.to} className="navbar__item">
 						{res.name}
 						{res.svg}
 					</Link>

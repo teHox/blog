@@ -31,6 +31,12 @@ export const api = createApi({
 				method: "PATCH",
 			})
 		}),
+		deletePost: builder.mutation({
+			query: (id) => ({
+				url: `posts/${id}`,
+				method: 'DELETE',
+			})
+		}),
 	}),
 });
 
@@ -39,4 +45,5 @@ export const {
 	useGetOnePostQuery,
 	useCreatePostMutation,
 	useUpdatePostMutation,
+	useDeletePostMutation,
 } = api;

@@ -22,8 +22,6 @@ const FullPost = ({data, active, setActive, id}) => {
 		}
 	}
 
-	console.log(likes);
-
 	return (
 		<>
 				<div className="full-post">
