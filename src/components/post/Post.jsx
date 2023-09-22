@@ -29,7 +29,7 @@ const Post = ({ item }) => {
 							{item.likes} <AiOutlineHeart />
 						</div>
 						<div className="all-posts__comments">
-							{item.commentsQuantity} <AiOutlineComment />
+							{item.comments.length} <AiOutlineComment />
 						</div>
 					</div>
 				</div>

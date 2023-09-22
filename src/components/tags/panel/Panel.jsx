@@ -1,5 +1,6 @@
 import React from "react";
 import { useColorTheme } from "../../../hooks/useColorTheme";
+import {Link} from "react-router-dom";
 
 const Panel = () => {
 	const { toggleColorTheme } = useColorTheme();
@@ -40,7 +41,7 @@ const Panel = () => {
 					</svg>
 				</div>
 			</div>
-			<div className="panel__profile">
+			<Link to="/admin" className="panel__profile">
 				<svg
 					width="20"
 					height="20"
@@ -70,7 +71,7 @@ const Panel = () => {
 						</clipPath>
 					</defs>
 				</svg>
-			</div>
+			</Link>
 			<div className="panel__line"></div>
 		</div>
 	);

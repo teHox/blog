@@ -15,20 +15,22 @@ const Tags = () => {
 					<Panel />
 					<div className="tags__wrapper">
 						<p className="tags__title">Tags</p>
-						{data.slice(0, 4).map((item, index) => (
-							<div className="tags__item" key={index}>
-								<FiHash />
-								<div className="tags__desc">
-									<h3 className="tags__name">
-										{item.name}
-									</h3>
-									<p className="tags__date">{item.date}</p>
-									<p className="tags__text">
-										{item.description}
-									</p>
+						<div className="tags__items">
+							{data.slice(0, 4).map((item, index) => (
+								<div className="tags__item" key={index}>
+									<FiHash />
+									<div className="tags__desc">
+										<h3 className="tags__name">
+											{item.name}
+										</h3>
+										<p className="tags__date">{item.date}</p>
+										<p className="tags__text">
+											{item.description}
+										</p>
+									</div>
 								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
 				</div>
 			)}

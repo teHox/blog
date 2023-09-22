@@ -12,10 +12,24 @@ export const api = createApi({
 	}),
 	endpoints: (builder) => ({
 		getAllPosts: builder.query({
-			query: () => "/posts",
+			query: () => "/posts?_sort=views&_order=desc",
 		}),
 		getOnePost: builder.query({
-			query: (id) => ({ url: `/posts/${id}` }),
+			query: (id) => ({ url: `/posts/${id}`}),
+		}),
+		createPost: builder.mutation({
+			query: (postInfo) => ({
+				body: postInfo,
+				url: "/posts",
+				method: "POST",
+			})
+		}),
+		updatePost: builder.mutation({
+			query: ({id, postInfo}) => ({
+				body: postInfo,
+				url: `/posts/${id}`,
+				method: "PATCH",
+			})
 		}),
 	}),
 });
@@ -23,4 +37,6 @@ export const api = createApi({
 export const {
 	useGetAllPostsQuery,
 	useGetOnePostQuery,
+	useCreatePostMutation,
+	useUpdatePostMutation,
 } = api;

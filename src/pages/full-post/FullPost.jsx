@@ -1,28 +1,38 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import Post from "../../components/post/Post";
-import { useParams } from "react-router-dom";
 import Tags from "../../components/tags/Tags";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Comment from "../../components/comment/Comment";
-import { useGetOnePostQuery } from "../../store/api/api";
+import AddComment from "../../components/addComment/AddComment";
+import {useUpdatePost} from "../../hooks/useUpdatePost";
 
-const FullPost = () => {
-	const { id } = useParams();
-	const { isLoading, data } = useGetOnePostQuery(id);
-	const [active, setActive] = useState(false);
+const FullPost = ({data, active, setActive, id}) => {
+	const [likes, setLikes] = useState(data.likes);
+
+	const {postInfo, setPostInfo, UpdatePost} = useUpdatePost(data);
+
+	const handleUpdatePost = (e) =>{
+		e.preventDefault();
+		if (postInfo === ""){
+			throw new Error();
+		} else {
+			setLikes(likes + 1);
+			setPostInfo({...postInfo, likes: likes});
+			UpdatePost({id, postInfo})
+		}
+	}
+
+	console.log(likes);
 
 	return (
 		<>
-			{isLoading ? (
-				<div>Loading...</div>
-			) : (
 				<div className="full-post">
 					<div className="container">
 						<Sidebar />
 						<div className="full-post__content">
-							<Post item={data} />
+							<Post item={data} likes={likes}/>
 							<div className="full-post__buttons">
-								<div className="full-post__btn">+ like</div>
+								<div onClick={handleUpdatePost} className="full-post__btn">+ like</div>
 								<div
 									className="full-post__btn"
 									onClick={() => setActive((prev) => !prev)}
@@ -31,10 +41,7 @@ const FullPost = () => {
 								</div>
 							</div>
 							{active ? (
-								<div className="full-post__add">
-									<textarea></textarea>
-									<button>Send comment</button>
-								</div>
+								<AddComment data={data} id={id}/>
 							) : (
 								""
 							)}
@@ -51,7 +58,6 @@ const FullPost = () => {
 						<Tags />
 					</div>
 				</div>
-			)}
 		</>
 	);
 };
