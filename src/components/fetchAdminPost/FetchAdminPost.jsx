@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useGetOnePostQuery } from "../../store/api/api";
-import FullPost from "../../pages/full-post/FullPost";
+import AdminFullPost from '../../pages/admin/AdminFullPost';
 
-const FetchFullPost = () => {
+const FetchAdminFullPost = () => {
     const { id } = useParams();
     const { isLoading, data } = useGetOnePostQuery(id);
     const [active, setActive] = useState(false);
@@ -13,10 +13,10 @@ const FetchFullPost = () => {
             {isLoading ? (
                 <div>Loading...</div>
             ) : (
-                <FullPost id={id} data={data} active={active} setActive={setActive}/>
+                <AdminFullPost id={id} data={data} active={active} setActive={setActive}/>
             )}
         </div>
     );
 };
 
-export default FetchFullPost;
+export default FetchAdminFullPost;

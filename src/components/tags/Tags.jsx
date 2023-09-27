@@ -16,7 +16,7 @@ const Tags = () => {
 					<div className="tags__wrapper">
 						<p className="tags__title">Tags</p>
 						<div className="tags__items">
-							{data.slice(0, 4).map((item, index) => (
+							{data.map((item, index) => (
 								<div className="tags__item" key={index}>
 									<FiHash />
 									<div className="tags__desc">

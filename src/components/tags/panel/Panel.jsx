@@ -1,6 +1,6 @@
 import React from "react";
 import { useColorTheme } from "../../../hooks/useColorTheme";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Panel = () => {
 	const { toggleColorTheme } = useColorTheme();
@@ -72,7 +72,7 @@ const Panel = () => {
 					</defs>
 				</svg>
 			</Link>
-			<div className="panel__line"></div>
+			<Link to="/" className="panel__line"></Link>
 		</div>
 	);
 };

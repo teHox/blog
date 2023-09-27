@@ -1,61 +1,67 @@
-import React, { useState} from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../../components/post/Post";
 import Tags from "../../components/tags/Tags";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Comment from "../../components/comment/Comment";
 import AddComment from "../../components/addComment/AddComment";
-import {useUpdatePost} from "../../hooks/useUpdatePost";
+import { useUpdatePostMutation } from "../../store/api/api";
 
-const FullPost = ({data, active, setActive, id}) => {
+const FullPost = ({ data, active, setActive, id }) => {
+	const [views, setViews] = useState(data.views);
 	const [likes, setLikes] = useState(data.likes);
+	const [postInfo, setPostInfo] = useState(data);
+	const [UpdatePost] = useUpdatePostMutation();
 
-	const {postInfo, setPostInfo, UpdatePost} = useUpdatePost(data);
+	useEffect(() => {
+		setViews(prev => prev + 1);
+		setPostInfo({ views: views + 1});
+		UpdatePost({ id, postInfo });
+	}, []);
 
-	const handleUpdatePost = (e) =>{
+	useEffect(() => {
+		UpdatePost({ id, postInfo });
+	}, [postInfo]);
+
+	const handleButton = (e) => {
 		e.preventDefault();
-		if (postInfo === ""){
-			throw new Error();
-		} else {
-			setLikes(likes + 1);
-			setPostInfo({...postInfo, likes: likes});
-			UpdatePost({id, postInfo})
-		}
+		setLikes(likes + 1);
+		setPostInfo({ likes: likes + 1});
 	}
 
 	return (
 		<>
-				<div className="full-post">
-					<div className="container">
-						<Sidebar />
-						<div className="full-post__content">
-							<Post item={data} likes={likes}/>
-							<div className="full-post__buttons">
-								<div onClick={handleUpdatePost} className="full-post__btn">+ like</div>
-								<div
-									className="full-post__btn"
-									onClick={() => setActive((prev) => !prev)}
-								>
-									+ comment
-								</div>
-							</div>
-							{active ? (
-								<AddComment data={data} id={id}/>
-							) : (
-								""
-							)}
-							<div className="full-post__comments">
-								{data.comments.map((comment, index) => (
-									<Comment
-										key={index}
-										comment={comment}
-										post={data}
-									/>
-								))}
+			<div className="full-post">
+				<div className="container">
+					<Sidebar />
+					<div className="full-post__content">
+						<Post item={data} likes={likes} />
+						<div className="full-post__buttons">
+							<div onClick={handleButton} className="full-post__btn">+ like</div>
+							<div
+								className="full-post__btn"
+								onClick={() => setActive((prev) => !prev)}
+							>
+								+ comment
 							</div>
 						</div>
-						<Tags />
+						{active ? (
+							<AddComment data={data} id={id} />
+						) : (
+							""
+						)}
+						<div className="full-post__comments">
+							{data.comments.toReversed().map((comment, index) => (
+								<Comment
+									key={index}
+									comment={comment}
+									post={data}
+								/>
+							))}
+						</div>
 					</div>
+					<Tags />
 				</div>
+			</div>
 		</>
 	);
 };

@@ -20,7 +20,7 @@ const AdminPost = ({ item }) => {
             <div className="admin-post__img">
                 <img src={item.image} alt={item.image} />
                 <Link
-                    to={`/post/${item.id}`}
+                    to={`/admin/post/${item.id}`}
                     className="admin-post__link"
                 >
                     CHANGE POST...

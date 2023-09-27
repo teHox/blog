@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Navbar from "../navbar/Navbar";
-import {adminInfo} from "../../pages/admin/adminInfo";
-import {AiOutlineComment, AiOutlineEye, AiOutlineHeart} from "react-icons/ai";
+import { adminInfo } from "../../pages/admin/adminInfo";
+import { AiOutlineComment, AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import { useCreatePostMutation } from '../../store/api/api';
 import CreatePostTags from "../createPostTags/CreatePostTags";
 
@@ -20,14 +20,14 @@ const dataClear = {
 const CreatePost = () => {
     const [postInfo, setPostInfo] = useState(dataClear);
 
-    const [CreatePost] = useCreatePostMutation(postInfo);
+    const [CreatePost] = useCreatePostMutation();
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (postInfo.title === "" || postInfo.image === "" ){
+        if (postInfo.title === "" || postInfo.image === "") {
             throw new Error();
         } else {
-            CreatePost(postInfo).then(()=>{
+            CreatePost(postInfo).then(() => {
                 setPostInfo(dataClear);
             })
         }
@@ -39,39 +39,39 @@ const CreatePost = () => {
                 <div className="create-post__user">{postInfo.name}</div>
                 <div className="create-post__date">{postInfo.date}</div>
                 <input type="text"
-                       className="create-post__title"
-                       placeholder="Write here your title..."
-                       value={postInfo.title}
-                       onChange={(e) => setPostInfo({...postInfo, title: e.target.value})}/>
+                    className="create-post__title"
+                    placeholder="Write here your title..."
+                    value={postInfo.title}
+                    onChange={(e) => setPostInfo({ ...postInfo, title: e.target.value })} />
                 <div className="create-post__block">
                     <div className="create-post__tags">
-                        {postInfo.tags.length === 0 ? "Check list of tags" : postInfo.tags.slice(0, 4).map((tag, index)=>(
+                        {postInfo.tags.length === 0 ? "Check list of tags" : postInfo.tags.slice(0, 4).map((tag, index) => (
                             <p key={index}>#{tag}</p>
                         ))}
                     </div>
                     <div className="create-post__info">
                         <div className="create-post__view">
                             00000
-                            <AiOutlineEye/>
+                            <AiOutlineEye />
                         </div>
                         <div className="create-post__likes">
                             0000
-                            <AiOutlineHeart/>
+                            <AiOutlineHeart />
                         </div>
                         <div className="create-post__comments">
                             000
-                            <AiOutlineComment/>
+                            <AiOutlineComment />
                         </div>
                     </div>
                 </div>
                 <input type="text" className="create-post__image" placeholder="Put here url of your photo"
-                       value={postInfo.image} onChange={(e) => setPostInfo({...postInfo, image: e.target.value})}/>
-                <img className="create-post__img" src={postInfo.image} alt={postInfo.image}/>
+                    value={postInfo.image} onChange={(e) => setPostInfo({ ...postInfo, image: e.target.value })} />
+                <img className="create-post__img" src={postInfo.image} alt={postInfo.image} />
                 <button className="create-post__btn" onClick={handleSubmit}>Create post</button>
             </form>
-            <CreatePostTags postInfo={postInfo} setPostInfo={setPostInfo}/>
+            <CreatePostTags postInfo={postInfo} setPostInfo={setPostInfo} />
         </div>
-        <Navbar adminInfo={adminInfo}/>
+        <Navbar adminInfo={adminInfo} />
     </div>);
 };
 

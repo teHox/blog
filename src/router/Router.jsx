@@ -5,6 +5,7 @@ import Admin from "../pages/admin/Admin";
 import TagAdmin from "../pages/admin/TagAdmin";
 import CreatePost from "../components/createPost/createPost";
 import FetchFullPost from "../components/fetchFullPost/FetchFullPost";
+import FetchAdminFullPost from "../components/fetchAdminPost/FetchAdminPost";
 
 const Router = () => {
 	const routes = [
@@ -14,7 +15,7 @@ const Router = () => {
 		},
 		{
 			path: "/post/:id",
-			element: <FetchFullPost />,
+			element: <FetchFullPost/>,
 		},
 		{
 			path: "/admin",
@@ -27,6 +28,10 @@ const Router = () => {
 		{
 			path: "/admin/create-tag",
 			element: <TagAdmin />,
+		},
+		{
+			path: "/admin/post/:id",
+			element: <FetchAdminFullPost />,
 		},
 	];
 

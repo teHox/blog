@@ -1,26 +1,29 @@
-import React, { useState} from 'react';
-import {useUpdatePost} from "../../hooks/useUpdatePost";
+import React, { useEffect, useState } from 'react';
+import { useUpdatePostMutation } from "../../store/api/api";
 
-const AddComment = ({id, data}) => {
+const AddComment = ({ id, data }) => {
     const [comment, setComment] = useState("");
+    const [postInfo, setPostInfo] = useState(data);
+    const [UpdatePost] = useUpdatePostMutation();
 
-    const {postInfo, setPostInfo, UpdatePost} = useUpdatePost(data);
+    useEffect(() => {
+        UpdatePost({ id, postInfo }).then(() => {
+            setComment("");
+        });
+    }, [postInfo])
 
-    const handleSendComment = (e) =>{
+    const handleSendComment = (e) => {
         e.preventDefault();
-        if (postInfo === ""){
+        if (postInfo === "") {
             throw new Error();
         } else {
-            setPostInfo({...postInfo, comments:[...data.comments, comment]});
-            UpdatePost({id, postInfo}).then(()=>{
-                setComment("");
-            })
+            setPostInfo({ ...postInfo, comments: [...postInfo.comments, comment] });
         }
     }
 
     return (
         <div className="full-post__add">
-            <textarea value={comment} onChange={e => setComment(e.target.value)}/>
+            <textarea value={comment} onChange={e => setComment(e.target.value)} />
             <button onClick={handleSendComment}>Send comment</button>
         </div>
     );
